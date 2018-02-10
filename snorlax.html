@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+      Philippine Flag
+  </title>
+
+  <!-- Rombawa, Justin Aaron S. -->
+  <!-- Sta. Ana, Yves Robert D. -->
+  <!--Import external javascript file-->
+  <!--Helper javascript methods for initializing webgl-->
+  <script src="./lib/webgl-init.js"></script>
+  <script src="./lib/webgl-utils.js"></script>
+  <script src="./lib/webgl-debug.js"></script>
+
+  <!--Vertex Shader-->
+  <script type="x-shader/x-vertex" id="vshader">
+    //declare an attribute variable that can be accessed in our javascript program
+    attribute vec4 aPosition;
+    void main() {
+
+      //Built-in variable in GLSL ES that dictates the position of the vertex
+      gl_Position = aPosition;
+
+      //Built-in variable in GLSL ES that dictates the size of the vertex
+      gl_PointSize = 10.0;
+    }
+  </script>
+
+  <!--Fragment Shader-->
+  <script type="x-shader/x-fragment" id="fshader">
+    //specifies the precision qualifer for the variable float
+    precision mediump float;
+
+    //declare and uniform variable that can be accessed in our javascript program
+    uniform vec4 uFragColor;
+    void main() {
+
+
+      //Sets the color for every fragment created by primitive assembly
+      gl_FragColor = uFragColor;
+    }
+  </script>
+
+
+  <script>
+  function main() {
+    //Retrieve <canvas> element
+    var canvas = document.getElementById("main_canvas");
+    if(!canvas) {
+        console.log("Failed to retrieve the <canvas> element");
+    }
+
+    //Get the rendering context (WebGL)
+    var gl = initializeWebGL(canvas,true);
+
+    //initialize shaders program
+    var vertexShader = initializeShader(gl,"vshader");
+    var fragmentShader = initializeShader(gl, "fshader");
+    var program = initializeProgram(gl,vertexShader,fragmentShader);
+    gl.useProgram(program);
+
+    //clear canvas
+    //black background because screw outlines hahahaha
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    //Get the storage location of shader variables
+    var aPositionPointer = gl.getAttribLocation(program,"aPosition");
+    var uFragColorPointer = gl.getUniformLocation(program,"uFragColor");
+    //array that contains the vertex data
+
+    /*Own code starts here*/
+    //A lot of these are just ellipses. Just a heads up.
+
+    var head = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.444 + 0.0060, //x
+            Math.sin(j)*0.344 + 0.4220, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [0.060,0.4220,0.0,1.0]; //center
+
+        //plug in to original array
+        head = head.concat(vert1);
+        head = head.concat(vert2);
+    }
+    var n = head.length / 4;
+
+    var headBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,headBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(head),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,0.0,106.0/255,107.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    var head = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.444 + 0.0060, //x
+            Math.sin(j)*0.344 + 0.4220, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [0.060,0.4220,0.0,1.0]; //center
+
+        //plug in to original array
+        head = head.concat(vert1);
+        head = head.concat(vert2);
+    }
+    var n = head.length / 4;
+
+    var headBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,headBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(head),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,0.0,106.0/255,107.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    var face = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.376 + 0.0080, //x
+            Math.sin(j)*0.282 + 0.4300, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [0.0080,0.4300,0.0,1.0]; //center
+
+        //plug in to original array
+        face = face.concat(vert1);
+        face = face.concat(vert2);
+    }
+    var n = face.length / 4;
+
+    var faceBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,faceBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(face),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,253.0/255,234.0/255,190.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    //forehead + ears
+    //just overlay a triangle over the forehead, not much to it.
+    var forehead = 
+    [
+        0.0, 0.632, 0.0, 1.0,
+        0.2, 0.714, 0.0, 1.0,
+        -0.168, 0.714, 0.0, 1.0,
+
+        //left ear
+        -0.41, 0.548, 0.0, 1.0,
+        -0.212,0.716, 0.0, 1.0,
+        -0.422,0.794, 0.0, 1.0,
+
+        //right ear
+        0.41, 0.558, 0.0, 1.0,
+        0.212,0.726, 0.0, 1.0,
+        0.422,0.794, 0.0, 1.0,
+    ];
+
+    var foreheadBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,foreheadBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(forehead),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,0.0,106.0/255,107.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 3);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 3, 3);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 6, 3);
+
+    var faceFeatures = 
+    [
+        //eyes
+        -0.2740, 0.5460, 0.0, 1.0,
+        -0.1740, 0.5660, 0.0, 1.0,
+        -0.0820, 0.5540, 0.0, 1.0,
+
+        0.0760, 0.5620, 0.0, 1.0,
+        0.1240, 0.5740, 0.0, 1.0,
+        0.2140, 0.5720, 0.0, 1.0,
+        0.2660, 0.5480, 0.0, 1.0,
+
+        //pout
+        0.1380, 0.4500, 0.0, 1.0,
+        0.0880, 0.4600, 0.0, 1.0,
+        0.0020, 0.4680, 0.0, 1.0,
+        -0.0880, 0.4640, 0.0, 1.0,
+        -0.1380, 0.4540, 0.0, 1.0,
+
+        //teeth
+        0.1380, 0.4500, 0.0, 1.0,
+        0.0880, 0.4600, 0.0, 1.0,
+        0.1260, 0.5000, 0.0, 1.0,
+
+        -0.1380, 0.4540, 0.0, 1.0,
+        -0.0880, 0.4640, 0.0, 1.0,
+        -0.1180, 0.5020, 0.0, 1.0,
+    ];
+
+    var faceFeaturesBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,faceFeaturesBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(faceFeatures),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    gl.uniform4f(uFragColorPointer,1.0,1.0,1.0,1.0);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 12, 3);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 15, 3);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,0.0,0.0,0.0,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.LINE_STRIP, 0, 3);
+    gl.drawArrays(gl.LINE_STRIP, 3, 4);
+    gl.drawArrays(gl.LINE_STRIP, 7, 5);
+
+    var leftArm = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.388 - 0.508 , //x
+            Math.sin(j)*0.184 + 0.394, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [-0.508,0.3940,0.0,1.0]; //center
+
+        //plug in to original array
+        leftArm = leftArm.concat(vert1);
+        leftArm = leftArm.concat(vert2);
+    }
+
+    for(var i=0;i<leftArm.length;i+=4)
+    {
+        //rotate x
+        var newX = leftArm[i]*Math.cos(Math.PI/4) - leftArm[i+1]*Math.sin(Math.PI/4);
+        //rotate y
+        var newY = leftArm[i]*Math.sin(Math.PI/4) + leftArm[i+1]*Math.cos(Math.PI/4);
+        leftArm[i] = newX;
+        leftArm[i+1] = newY;
+    }
+
+    var n = leftArm.length / 4;
+
+    var leftArmBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,leftArmBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(leftArm),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,0.0,106.0/255,107.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    //arms are a bit on the tough side, but it finally brought about some proper rotatioin transformation
+    var rightArm = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.179 + 0.402 , //x
+            Math.sin(j)*0.398 - 0.512, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [0.402,-0.512,0.0,1.0]; //center
+
+        //plug in to original array
+        rightArm = rightArm.concat(vert1);
+        rightArm = rightArm.concat(vert2);
+    }
+    //... right here. Rotate a coordinate at a time, careful to isolate the final from the original before actually replacing the original
+    for(var i=0;i<rightArm.length;i+=4)
+    {
+        //rotate x
+        var newX = rightArm[i]*Math.cos(Math.PI/4) - rightArm[i+1]*Math.sin(Math.PI/4);
+        //rotate y
+        var newY = rightArm[i]*Math.sin(Math.PI/4) + rightArm[i+1]*Math.cos(Math.PI/4);
+        rightArm[i] = newX;
+        rightArm[i+1] = newY;
+    }
+    var n = rightArm.length / 4;
+
+    var rightArmBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,rightArmBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(rightArm),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,0.0,106.0/255,107.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    //just one gigantic ellipse, nothing to see here. thought i had to compensate some lost areas but nah.
+    var body = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.72 + 0.0040, //x
+            Math.sin(j)*0.562 - 0.1680, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [0.040,0.1680,0.0,1.0]; //center
+
+        //plug in to original array
+        body = body.concat(vert1);
+        body = body.concat(vert2);
+    }
+    var n = body.length / 4;
+
+    var bodyBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,bodyBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(body),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,0.0,106.0/255,107.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    /*
+    now the belly. Actually the chest but I'm writing these afterhand and I don't wanna change everything to chest so deal with it.
+    The belly is the culmination of everything I've done here.
+    Had no energy to study bezier curves, so I did what I did best. Overlaying the heck out of ellipses. First ellipse here is center bulk. Then made a couple of ellipses then rotated them. Finally added a couple of triangles to fill out some missing chunk in the lower mid.
+    */
+    var belly = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.512 + 0.0060, //x
+            Math.sin(j)*0.242 + 0.1520, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [0.060,0.1520,0.0,1.0]; //center
+
+        //plug in to original array
+        belly = belly.concat(vert1);
+        belly = belly.concat(vert2);
+    }
+    var n = belly.length / 4;
+
+    var bellyBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,bellyBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(belly),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,253.0/255,234.0/255,190.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    var leftBelly = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.278 - 0.276, //x
+            Math.sin(j)*0.230 + 0.174, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [-0.306,0.174,0.0,1.0]; //center
+
+        //plug in to original array
+        leftBelly = leftBelly.concat(vert1);
+        leftBelly = leftBelly.concat(vert2);
+    }
+    for(var i=0;i<rightArm.length;i+=4)
+    {
+        //rotate x
+        var newX = leftBelly[i]*Math.cos(Math.PI/9) - leftBelly[i+1]*Math.sin(Math.PI/9);
+        //rotate y
+        var newY = leftBelly[i]*Math.sin(Math.PI/9) + leftBelly[i+1]*Math.cos(Math.PI/9);
+        leftBelly[i] = newX;
+        leftBelly[i+1] = newY;
+    }
+
+    var n = leftBelly.length / 4;
+
+    var leftBellyBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,leftBellyBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(leftBelly),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,253.0/255,234.0/255,190.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    var rightBelly = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.264 + 0.298, //x
+            Math.sin(j)*0.221 + 0.166, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [0.298,0.166,0.0,1.0]; //center
+
+        //plug in to original array
+        rightBelly = rightBelly.concat(vert1);
+        rightBelly = rightBelly.concat(vert2);
+    }
+    for(var i=0;i<rightArm.length;i+=4)
+    {
+        //rotate x
+        var newX = rightBelly[i]*Math.cos(-Math.PI/12) - rightBelly[i+1]*Math.sin(-Math.PI/12);
+        //rotate y
+        var newY = rightBelly[i]*Math.sin(-Math.PI/12) + rightBelly[i+1]*Math.cos(-Math.PI/12);
+        rightBelly[i] = newX;
+        rightBelly[i+1] = newY;
+    }
+
+    var n = rightBelly.length / 4;
+
+    var rightBellyBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,rightBellyBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(rightBelly),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,253.0/255,234.0/255,190.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    var bellyAdd = 
+    [
+        -0.3200, -0.1670, 0.0, 1.0,
+        -0.1540, -0.0720, 0.0, 1.0,
+        0.0000, -0.0920, 0.0, 1.0,
+
+        0.0000, -0.0920, 0.0, 1.0,
+        0.162,-0.072, 0.0, 1.0,
+        0.322, -0.138, 0.0, 1.0
+    ];
+
+    var bellyAddBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,bellyAddBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(bellyAdd),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    gl.uniform4f(uFragColorPointer,253.0/255,234.0/255,190.0/255,1.0);
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, 3);
+    gl.drawArrays(gl.TRIANGLE_FAN, 3, 3);
+
+    //pretty much all claws are triangle fans, plotted and drawn one by one
+    //although... I don't get why all left claws (even the feet) had more points than the right ones. Oh well.
+    var handClaws = 
+    [
+        //left
+        -0.9430, -0.2540, 0.0, 1.0,
+        -0.9710, -0.2760, 0.0, 1.0,
+        -0.9730, -0.2840, 0.0, 1.0,
+        -0.9550, -0.2860, 0.0, 1.0,
+        -0.9410, -0.2800, 0.0, 1.0,
+
+        -0.9420, -0.2960, 0.0, 1.0,
+        -0.9660, -0.3260, 0.0, 1.0,
+        -0.9480, -0.3260, 0.0, 1.0,
+        -0.9320, -0.3180, 0.0, 1.0,
+        -0.9320, -0.3040, 0.0, 1.0,
+
+        -0.9230, -0.3400, 0.0, 1.0,
+        -0.9410, -0.3680, 0.0, 1.0,
+        -0.9210, -0.3700, 0.0, 1.0,
+        -0.9070, -0.3620, 0.0, 1.0,
+
+        -0.9000, -0.3600, 0.0, 1.0,
+        -0.9040, -0.4000, 0.0, 1.0,
+        -0.8780, -0.3780, 0.0, 1.0,
+
+        -0.8600, -0.3810, 0.0, 1.0,
+        -0.8400, -0.4080, 0.0, 1.0,
+        -0.8300, -0.3820, 0.0, 1.0,
+
+        //right
+        0.9550, -0.2540, 0.0, 1.0,
+        0.9850, -0.2840, 0.0, 1.0,
+        0.9530, -0.2800, 0.0, 1.0,
+
+        0.9530, -0.2960, 0.0, 1.0,
+        0.9810, -0.3280, 0.0, 1.0,
+        0.9490, -0.3240, 0.0, 1.0,
+
+        0.9450, -0.3360, 0.0, 1.0,
+        0.9690, -0.3740, 0.0, 1.0,
+        0.9310, -0.3580, 0.0, 1.0,
+
+        0.9140, -0.3710, 0.0, 1.0,
+        0.9200, -0.4110, 0.0, 1.0,
+        0.8920, -0.3820, 0.0, 1.0,
+
+        0.8640, -0.3860, 0.0, 1.0,
+        0.8360, -0.4080, 0.0, 1.0,
+        0.8180, -0.3860, 0.0, 1.0
+
+    ];
+
+    var handClawsBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,handClawsBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(handClaws),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    gl.uniform4f(uFragColorPointer,1.0,1.0,1.0,1.0);
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, 5);
+    gl.drawArrays(gl.TRIANGLE_FAN, 5, 5);
+    gl.drawArrays(gl.TRIANGLE_FAN, 10, 4);
+    gl.drawArrays(gl.TRIANGLE_FAN, 14, 3);
+    gl.drawArrays(gl.TRIANGLE_FAN, 17, 3);
+
+    gl.drawArrays(gl.TRIANGLE_FAN, 20, 3);
+    gl.drawArrays(gl.TRIANGLE_FAN, 23, 3);
+    gl.drawArrays(gl.TRIANGLE_FAN, 26, 3);
+    gl.drawArrays(gl.TRIANGLE_FAN, 29, 3);
+    gl.drawArrays(gl.TRIANGLE_FAN, 32, 3);
+
+    var leftFoot = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.279 - 0.5680, //x
+            Math.sin(j)*0.259 - 0.5380, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [-0.5680,-0.5380,0.0,1.0]; //center
+
+        //plug in to original array
+        leftFoot = leftFoot.concat(vert1);
+        leftFoot = leftFoot.concat(vert2);
+    }
+    var n = leftFoot.length / 4;
+
+    var leftFootBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,leftFootBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(leftFoot),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,253.0/255,234.0/255,190.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    var rightFoot = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.265 + 0.5840, //x
+            Math.sin(j)*0.265 - 0.5320, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [0.5840, -0.5320,0.0,1.0]; //center
+
+        //plug in to original array
+        rightFoot = rightFoot.concat(vert1);
+        rightFoot = rightFoot.concat(vert2);
+    }
+    var n = rightFoot.length / 4;
+
+    var rightFootBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,rightFootBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(rightFoot),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,253.0/255,234.0/255,190.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    var leftBean = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.124 - 0.678, //x
+            Math.sin(j)*0.104 - 0.474, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [-0.678, -0.474,0.0,1.0]; //center
+
+        //plug in to original array
+        leftBean = leftBean.concat(vert1);
+        leftBean = leftBean.concat(vert2);
+    }
+    for(var i=0;i<leftBean.length;i+=4)
+    {
+        //rotate x
+        var newX = leftBean[i]*Math.cos(Math.PI/12) - leftBean[i+1]*Math.sin(Math.PI/12);
+        //rotate y
+        var newY = leftBean[i]*Math.sin(Math.PI/12) + leftBean[i+1]*Math.cos(Math.PI/12);
+        leftBean[i] = newX;
+        leftBean[i+1] = newY;
+    }
+
+    var n = leftBean.length / 4;
+
+    var leftBeanBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,leftBeanBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(leftBean),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,92.0/255,55.0/255,12.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    var rightBean = [];
+    for(var i=0; i<=360; i++)
+    {
+        //convert degree to radian
+        var j = i * Math.PI/180
+
+        //cos and sin only work with radian
+        var vert1 = [
+            Math.cos(j)*0.111 + 0.352, //x
+            Math.sin(j)*0.103 - 0.72, //y
+            0.0,         //z
+            1.0          //w
+        ];
+        //yes including the center
+
+        //required center: 154x250
+        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        var vert2 = [0.352, -0.72,0.0,1.0]; //center
+
+        //plug in to original array
+        rightBean = rightBean.concat(vert1);
+        rightBean = rightBean.concat(vert2);
+    }
+    for(var i=0;i<rightBean.length;i+=4)
+    {
+        //rotate x
+        var newX = rightBean[i]*Math.cos(Math.PI/12) - rightBean[i+1]*Math.sin(Math.PI/12);
+        //rotate y
+        var newY = rightBean[i]*Math.sin(Math.PI/12) + rightBean[i+1]*Math.cos(Math.PI/12);
+        rightBean[i] = newX;
+        rightBean[i+1] = newY;
+    }
+
+    var n = rightBean.length / 4;
+
+    var rightBeanBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,rightBeanBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(rightBean),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    //Set color in fragment shader
+    gl.uniform4f(uFragColorPointer,92.0/255,55.0/255,12.0/255,1.0);
+    //Execute vertex shader
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+    var feetClaws = 
+    [
+        //left foot
+        -0.7900, -0.5840, 0.0, 1.0,
+        -0.8020, -0.6120, 0.0, 1.0,
+        -0.8240, -0.6280, 0.0, 1.0,
+        -0.8580, -0.6240, 0.0, 1.0,
+        -0.9080, -0.5960, 0.0, 1.0,
+        -0.9260, -0.5720, 0.0, 1.0,
+        -0.9080, -0.5520, 0.0, 1.0,
+        -0.8360, -0.5260, 0.0, 1.0,
+        -0.8040, -0.5460, 0.0, 1.0,
+
+        -0.7380, -0.4120, 0.0, 1.0,
+        -0.7300, -0.3880, 0.0, 1.0,
+        -0.7300, -0.3640, 0.0, 1.0,
+        -0.7660, -0.3380, 0.0, 1.0,
+        -0.8240, -0.3220, 0.0, 1.0,
+        -0.8520, -0.3200, 0.0, 1.0,
+        -0.8320, -0.4020, 0.0, 1.0,
+        -0.8100, -0.4400, 0.0, 1.0,
+        -0.7700, -0.4400, 0.0, 1.0,
+
+        -0.5920, -0.3240, 0.0, 1.0,
+        -0.5680, -0.3040, 0.0, 1.0,
+        -0.5540, -0.2840, 0.0, 1.0,
+        -0.5780, -0.2380, 0.0, 1.0,
+        -0.6120, -0.2080, 0.0, 1.0,
+        -0.6520, -0.1920, 0.0, 1.0,
+        -0.6600, -0.2200, 0.0, 1.0,
+        -0.6580, -0.3040, 0.0, 1.0,
+        -0.6440, -0.3200, 0.0, 1.0,
+
+        //right foot
+        0.6500, -0.1760, 0.0, 1.0,
+        0.6500, -0.2980, 0.0, 1.0,
+        0.6240, -0.3120, 0.0, 1.0,
+        0.5880, -0.3020, 0.0, 1.0,
+        0.5480, -0.2720, 0.0, 1.0,
+        0.5480, -0.2580, 0.0, 1.0,
+
+        0.8500, -0.2860, 0.0, 1.0,
+        0.8020, -0.3940, 0.0, 1.0,
+        0.7780, -0.3900, 0.0, 1.0,
+        0.7480, -0.3720, 0.0, 1.0,
+        0.7340, -0.3280, 0.0, 1.0,
+        0.7460, -0.3120, 0.0, 1.0,
+
+        0.9280, -0.5220, 0.0, 1.0,
+        0.8380, -0.4860, 0.0, 1.0,
+        0.8200, -0.5240, 0.0, 1.0,
+        0.8500, -0.5680, 0.0, 1.0
+
+    ];
+
+    var feetClawsBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,feetClawsBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(feetClaws),gl.STATIC_DRAW);
+    gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPositionPointer);
+
+    gl.uniform4f(uFragColorPointer,1.0,1.0,1.0,1.0);
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, 9);
+    gl.drawArrays(gl.TRIANGLE_FAN, 9, 9);
+    gl.drawArrays(gl.TRIANGLE_FAN, 18, 9);
+    gl.drawArrays(gl.TRIANGLE_FAN, 27, 6);
+    gl.drawArrays(gl.TRIANGLE_FAN, 33, 6);
+    gl.drawArrays(gl.TRIANGLE_FAN, 39, 4);
+
+  }
+  </script>
+</head>
+
+<body onload="main()" style="text-align: center">
+    
+	<canvas id="main_canvas" width="800" height="800" style="border: 1px black solid">
+	</canvas>
+  </body>
+</html>
