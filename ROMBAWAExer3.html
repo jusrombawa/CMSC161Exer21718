@@ -17,16 +17,16 @@
     gl_FragColor = uColor;
   }
   </script>
-	
-	<!--Import external javascript file-->
+    
+    <!--Import external javascript file-->
   <!--Helper javascript methods for initializing webgl-->
   <script src="./lib/webgl-init.js"></script>
   <script src="./lib/webgl-utils.js"></script>
   <script src="./lib/webgl-debug.js"></script>
-	
-	<script>
     
-	
+    <script>
+    
+    
     function main() {
       var canvas = document.getElementById("c");
       var gl = initializeWebGL(canvas);
@@ -46,25 +46,252 @@
       gl.clear(gl.COLOR_BUFFER_BIT);
 
       //draw pokeball
-      
 
-      var tala1 = [
-      0.0, 0.5, 0.0, 1.0,
-      0.5, 0.5, 0.0, 1.0,
-      0.5, 0.0, 0.0, 1.0
-      ];
+      var red = [];
+      for(var i=0; i<=360; i++)
+      {
+          //convert degree to radian
+          var j = i * Math.PI/180
 
-      var tala1Buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER,tala1Buffer);
-      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(tala1),gl.STATIC_DRAW);
+          //cos and sin only work with radian
+          var vert1 = [
+              //radius of sun is 50 pixels, 1/10 of xRes/2, 1/5 of yRes/2
+
+              //translate all x so it goes to left, in the middle of triangle
+              Math.cos(j) * 0.725, //x
+              Math.sin(j) * 0.725, //y
+              0.0,         //z
+              1.0          //w
+          ];
+          //yes including the center
+
+          var vert2 = [0.0,0.0,0.0,1.0]; //center
+
+          //plug in to original array
+          red = red.concat(vert1);
+          red = red.concat(vert2);
+      }
+      var n = red.length / 4;
+
+      var redBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER,redBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(red),gl.STATIC_DRAW);
       gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
       gl.enableVertexAttribArray(aPositionPointer);
 
       //Set color in fragment shader
-      gl.uniform4f(uColorPointer,255/255.0,0/255.0,0/255.0,1.0);
+      gl.uniform4f(uColorPointer,1,28.0/255,28.0/255,1.0);
       //Execute vertex shader
-      gl.drawArrays(gl.TRIANGLE_FAN, 0, 3);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+      var white = [];
+      for(var i=180; i<=360; i++)
+      {
+          //convert degree to radian
+          var j = i * Math.PI/180
+
+          //cos and sin only work with radian
+          var vert1 = [
+              //radius of sun is 50 pixels, 1/10 of xRes/2, 1/5 of yRes/2
+
+              //translate all x so it goes to left, in the middle of triangle
+              Math.cos(j) * 0.725, //x
+              Math.sin(j) * 0.725, //y
+              0.0,         //z
+              1.0          //w
+          ];
+          //yes including the center
+
+          
+          
+          var vert2 = [0.0,0.0,0.0,1.0]; //center
+
+          //plug in to original array
+          white = white.concat(vert1);
+          white = white.concat(vert2);
+      }
+      var n = white.length / 4;
+
+      var whiteBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER,whiteBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(white),gl.STATIC_DRAW);
+      gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+      gl.enableVertexAttribArray(aPositionPointer);
+
+      //Set color in fragment shader
+      gl.uniform4f(uColorPointer,1,1,1,1.0);
+      //Execute vertex shader
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+      var black = [];
+      for(var i=0; i<=360; i++)
+      {
+          //convert degree to radian
+          var j = i * Math.PI/180
+
+          //cos and sin only work with radian
+          var vert1 = [
+              //radius of sun is 50 pixels, 1/10 of xRes/2, 1/5 of yRes/2
+
+              //translate all x so it goes to left, in the middle of triangle
+              Math.cos(j) * 0.283, //x
+              Math.sin(j) * 0.283, //y
+              0.0,         //z
+              1.0          //w
+          ];
+          //yes including the center
+
+          
+          
+          var vert2 = [0.0,0.0,0.0,1.0]; //center
+
+          //plug in to original array
+          black = black.concat(vert1);
+          black = black.concat(vert2);
+      }
+      var n = black.length / 4;
+
+      var blackBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER,blackBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(black),gl.STATIC_DRAW);
+      gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+      gl.enableVertexAttribArray(aPositionPointer);
+
+      //Set color in fragment shader
+      gl.uniform4f(uColorPointer,0,0,0,1.0);
+      //Execute vertex shader
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);
+
+      var button = [];
+      for(var i=0; i<=360; i++)
+      {
+          //convert degree to radian
+          var j = i * Math.PI/180
+
+          //cos and sin only work with radian
+          var vert1 = [
+              //radius of sun is 50 pixels, 1/10 of xRes/2, 1/5 of yRes/2
+
+              //translate all x so it goes to left, in the middle of triangle
+              Math.cos(j) * 0.167, //x
+              Math.sin(j) * 0.167, //y
+              0.0,         //z
+              1.0          //w
+          ];
+          //yes including the center
+
+          
+          
+          var vert2 = [0.0,0.0,0.0,1.0]; //center
+
+          //plug in to original array
+          button = button.concat(vert1);
+          button = button.concat(vert2);
+      }
+      var n = button.length / 4;
+
+      var buttonBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER,buttonBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(button),gl.STATIC_DRAW);
+      gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+      gl.enableVertexAttribArray(aPositionPointer);
+
+      //Set color in fragment shader
+      gl.uniform4f(uColorPointer,1.0,1,1,1.0);
+      //Execute vertex shader
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);      
       
+
+      var strip = [
+      -0.74, 0.06, 0.0, 1.0,
+      -0.74, -0.06, 0.0, 1.0,
+      0.74, -0.06, 0.0, 1.0,
+      0.74, 0.06, 0.0, 1.0
+      ];
+
+      var stripBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER,stripBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(strip),gl.STATIC_DRAW);
+      gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+      gl.enableVertexAttribArray(aPositionPointer);
+
+      //Set color in fragment shader
+      gl.uniform4f(uColorPointer,0.0, 0.0, 0.0,1.0);
+      //Execute vertex shader
+      gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
+
+      var button = [];
+      for(var i=0; i<=360; i++)
+      {
+          //convert degree to radian
+          var j = i * Math.PI/180
+
+          //cos and sin only work with radian
+          var vert1 = [
+              //radius of sun is 50 pixels, 1/10 of xRes/2, 1/5 of yRes/2
+
+              //translate all x so it goes to left, in the middle of triangle
+              Math.cos(j) * 0.167, //x
+              Math.sin(j) * 0.167, //y
+              0.0,         //z
+              1.0          //w
+          ];
+          //yes including the center
+
+          
+          
+          var vert2 = [0.0,0.0,0.0,1.0]; //center
+
+          //plug in to original array
+          button = button.concat(vert1);
+          button = button.concat(vert2);
+      }
+      var n = button.length / 4;
+
+      var buttonBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER,buttonBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(button),gl.STATIC_DRAW);
+      gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+      gl.enableVertexAttribArray(aPositionPointer);
+
+      var button = [];
+      for(var i=0; i<=360; i++)
+      {
+          //convert degree to radian
+          var j = i * Math.PI/180
+
+          //cos and sin only work with radian
+          var vert1 = [
+              //radius of sun is 50 pixels, 1/10 of xRes/2, 1/5 of yRes/2
+
+              //translate all x so it goes to left, in the middle of triangle
+              Math.cos(j) * 0.167, //x
+              Math.sin(j) * 0.167, //y
+              0.0,         //z
+              1.0          //w
+          ];
+          //yes including the center
+
+          
+          
+          var vert2 = [0.0,0.0,0.0,1.0]; //center
+
+          //plug in to original array
+          button = button.concat(vert1);
+          button = button.concat(vert2);
+      }
+      var n = button.length / 4;
+
+      var buttonBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER,buttonBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(button),gl.STATIC_DRAW);
+      gl.vertexAttribPointer(aPositionPointer,4,gl.FLOAT,false,0,0);
+      gl.enableVertexAttribArray(aPositionPointer);
+
+      //Set color in fragment shader
+      gl.uniform4f(uColorPointer,1.0,1,1,1.0);
+      //Execute vertex shader
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);      
       
       var clicked = false;
       //javascript onclick event
@@ -81,6 +308,8 @@
         changeCaption();
       }
     }
+
+    
     
     function changeCaption() {
       var header = document.getElementById("test");
@@ -108,8 +337,8 @@
           ];
           //yes including the center
 
-          //required center: 154x250
-          //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+          
+          
           var vert2 = [0.060,0.4220,0.0,1.0]; //center
 
           //plug in to original array
@@ -144,8 +373,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [0.0080,0.4300,0.0,1.0]; //center
 
         //plug in to original array
@@ -258,8 +487,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [-0.508,0.3940,0.0,1.0]; //center
 
         //plug in to original array
@@ -306,8 +535,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [0.402,-0.512,0.0,1.0]; //center
 
         //plug in to original array
@@ -353,8 +582,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [0.040,0.1680,0.0,1.0]; //center
 
         //plug in to original array
@@ -394,8 +623,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [0.060,0.1520,0.0,1.0]; //center
 
         //plug in to original array
@@ -430,8 +659,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [-0.306,0.174,0.0,1.0]; //center
 
         //plug in to original array
@@ -476,8 +705,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [0.298,0.166,0.0,1.0]; //center
 
         //plug in to original array
@@ -615,8 +844,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [-0.5680,-0.5380,0.0,1.0]; //center
 
         //plug in to original array
@@ -651,8 +880,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [0.5840, -0.5320,0.0,1.0]; //center
 
         //plug in to original array
@@ -687,8 +916,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [-0.678, -0.474,0.0,1.0]; //center
 
         //plug in to original array
@@ -733,8 +962,8 @@
         ];
         //yes including the center
 
-        //required center: 154x250
-        //subtract difference from origin (500x250), subtract xRes/2 (500), divide by xRes/2 (500) = -0.692
+        
+        
         var vert2 = [0.352, -0.72,0.0,1.0]; //center
 
         //plug in to original array
@@ -834,9 +1063,9 @@
     gl.drawArrays(gl.TRIANGLE_FAN, 39, 4);
        
     }
-	</script>
-	<style>
-		canvas {
+    </script>
+    <style>
+        canvas {
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
@@ -845,19 +1074,19 @@
 
   }
 
-	body{
+    body{
 text-align: center;
 
-	}
-	</style>
+    }
+    </style>
 </head>
 <body onload="main()">
-	<canvas id="c" width="700" height="700" style="border: 1px black solid; ">
-	</canvas>
+    <canvas id="c" width="700" height="700" style="border: 1px black solid; ">
+    </canvas>
 
-	<h1 id="test"></h1>
+    <h1 id="test"></h1>
 
-	<p id="test2">Click on the canvas.</p>
-	</p>
+    <p id="test2">Click on the canvas.</p>
+    </p>
 </body>
 </html>
